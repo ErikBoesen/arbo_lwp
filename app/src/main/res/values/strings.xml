@@ -1,3 +1,5 @@
 <resources>
+    <string name="hello">Hello world!</string>
     <string name="app_name">ArboLWP</string>
+    <string name="wallpaper_description">Show a nice tree on your home screen</string>
 </resources>
