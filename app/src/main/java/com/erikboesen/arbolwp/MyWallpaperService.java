@@ -113,8 +113,7 @@ public class MyWallpaperService extends WallpaperService {
                     }
                     int x = (int) (width * Math.random());
                     int y = (int) (height * Math.random());
-                    circles.add(new MyPoint(String.valueOf(circles.size() + 1),
-                            x, y));
+                    circles.add(new MyPoint(String.valueOf(circles.size() + 1), x, y));
                     drawCircles(canvas, circles);
                 }
             } finally {
@@ -124,6 +123,29 @@ public class MyWallpaperService extends WallpaperService {
             handler.removeCallbacks(drawRunner);
             if (visible) {
                 handler.postDelayed(drawRunner, 5000);
+            }
+        }
+
+        private void drawBranch(Canvas canvas, int iteration, float length, int startX, int startY, int angle) {
+            int endX = startX + (int)(Math.cos(angle) * length);
+            int endY = startY + (int)(Math.sin(angle) * length);
+            canvas.drawLine(startX, startY, endX, endY, paint);
+            if (iteration > 0) {
+                this.drawBranch(canvas,
+                        iteration - 1,
+                        length * options.branchLengthMultiplier.value / 100,
+                        endX, endY,
+                        angle + radians(Float.parseFloat(options.spread.value) + Float.parseFloat(options.tilt.value) + wind));
+                this.drawBranch(canvas,
+                        iteration - 1,
+                        length * options.middleLengthMultiplier.value / 100,
+                        endX, endY,
+                        angle + radians(Float.parseFloat(options.tilt.value) + wind));
+                this.drawBranch(canvas,
+                        iteration - 1,
+                        length * options.branchLengthMultiplier.value / 100,
+                        endX, endY,
+                        angle + radians(-Float.parseFloat(options.spread.value) + Float.parseFloat(options.tilt.value) + wind));
             }
         }
 
