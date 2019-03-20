@@ -126,6 +126,10 @@ public class MyWallpaperService extends WallpaperService {
             }
         }
 
+        private double radians(int degrees) {
+            return degrees * Math.PI / 180;
+        }
+
         private void drawBranch(Canvas canvas, int iteration, float length, int startX, int startY, int angle) {
             int endX = startX + (int)(Math.cos(angle) * length);
             int endY = startY + (int)(Math.sin(angle) * length);
@@ -135,17 +139,17 @@ public class MyWallpaperService extends WallpaperService {
                         iteration - 1,
                         length * options.branchLengthMultiplier.value / 100,
                         endX, endY,
-                        angle + radians(Float.parseFloat(options.spread.value) + Float.parseFloat(options.tilt.value) + wind));
+                        angle + this.radians(Double.parseDouble(options.spread.value) + Double.parseDouble(options.tilt.value) + wind));
                 this.drawBranch(canvas,
                         iteration - 1,
                         length * options.middleLengthMultiplier.value / 100,
                         endX, endY,
-                        angle + radians(Float.parseFloat(options.tilt.value) + wind));
+                        angle + this.radians(Double.parseDouble(options.tilt.value) + wind));
                 this.drawBranch(canvas,
                         iteration - 1,
                         length * options.branchLengthMultiplier.value / 100,
                         endX, endY,
-                        angle + radians(-Float.parseFloat(options.spread.value) + Float.parseFloat(options.tilt.value) + wind));
+                        angle + this.radians(-Double.parseDouble(options.spread.value) + Double.parseDouble(options.tilt.value) + wind));
             }
         }
 
