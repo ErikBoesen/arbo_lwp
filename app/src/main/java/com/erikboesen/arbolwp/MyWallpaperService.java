@@ -130,26 +130,31 @@ public class MyWallpaperService extends WallpaperService {
             return degrees * Math.PI / 180;
         }
 
-        private void drawBranch(Canvas canvas, int iteration, float length, int startX, int startY, int angle) {
+        private void drawBranch(Canvas canvas, int iteration, float length, int startX, int startY, double angle) {
+            int branchLengthMultiplier = 75,
+                middleLengthMultiplier = 65,
+                spread = 30,
+                wind = 0,
+                tilt = 0;
             int endX = startX + (int)(Math.cos(angle) * length);
             int endY = startY + (int)(Math.sin(angle) * length);
             canvas.drawLine(startX, startY, endX, endY, paint);
             if (iteration > 0) {
                 this.drawBranch(canvas,
                         iteration - 1,
-                        length * options.branchLengthMultiplier.value / 100,
+                        length * branchLengthMultiplier / 100,
                         endX, endY,
-                        angle + this.radians(Double.parseDouble(options.spread.value) + Double.parseDouble(options.tilt.value) + wind));
+                        angle + this.radians(spread + tilt + wind));
                 this.drawBranch(canvas,
                         iteration - 1,
-                        length * options.middleLengthMultiplier.value / 100,
+                        length * middleLengthMultiplier / 100,
                         endX, endY,
-                        angle + this.radians(Double.parseDouble(options.tilt.value) + wind));
+                        angle + this.radians(tilt + wind));
                 this.drawBranch(canvas,
                         iteration - 1,
-                        length * options.branchLengthMultiplier.value / 100,
+                        length * branchLengthMultiplier / 100,
                         endX, endY,
-                        angle + this.radians(-Double.parseDouble(options.spread.value) + Double.parseDouble(options.tilt.value) + wind));
+                        angle + this.radians(-spread + tilt + wind));
             }
         }
 
