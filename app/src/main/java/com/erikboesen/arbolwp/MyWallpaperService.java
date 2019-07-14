@@ -108,13 +108,7 @@ public class MyWallpaperService extends WallpaperService {
             try {
                 canvas = holder.lockCanvas();
                 if (canvas != null) {
-                    if (circles.size() >= maxNumber) {
-                        circles.clear();
-                    }
-                    int x = (int) (width * Math.random());
-                    int y = (int) (height * Math.random());
-                    circles.add(new MyPoint(String.valueOf(circles.size() + 1), x, y));
-                    drawCircles(canvas, circles);
+                    this.drawBranch(canvas, 5, 20, 50, 50, 0);
                 }
             } finally {
                 if (canvas != null)
@@ -130,7 +124,9 @@ public class MyWallpaperService extends WallpaperService {
             return degrees * Math.PI / 180;
         }
 
-        private void drawBranch(Canvas canvas, int iteration, float length, int startX, int startY, double angle) {
+        private void drawBranch(Canvas canvas, int iteration, double length, int startX, int startY, double angle) {
+            canvas.drawLine(iteration, iteration, iteration * 4, iteration * 4, paint);
+            return;/*
             int branchLengthMultiplier = 75,
                 middleLengthMultiplier = 65,
                 spread = 30,
@@ -154,15 +150,7 @@ public class MyWallpaperService extends WallpaperService {
                         iteration - 1,
                         length * branchLengthMultiplier / 100,
                         endX, endY,
-                        angle + this.radians(-spread + tilt + wind));
-            }
-        }
-
-        // Surface view requires that all elements are drawn completely
-        private void drawCircles(Canvas canvas, List<MyPoint> circles) {
-            canvas.drawColor(Color.BLACK);
-            for (MyPoint point : circles) {
-                canvas.drawCircle(point.x, point.y, 20.0f, paint);
+                        angle + this.radians(-spread + tilt + wind));*/
             }
         }
     }
