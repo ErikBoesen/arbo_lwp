@@ -8,8 +8,6 @@ import android.graphics.Paint;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.service.wallpaper.WallpaperService;
-import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
@@ -77,7 +75,7 @@ public class MyWallpaperService extends WallpaperService {
             try {
                 canvas = holder.lockCanvas();
                 if (canvas != null) {
-                    this.drawBranch(canvas, 5, 200, this.width / 2, this.height, 0);
+                    this.drawBranch(canvas, 10, 350, this.width / 2, this.height, -Math.PI / 2);
                 }
             } finally {
                 if (canvas != null)
