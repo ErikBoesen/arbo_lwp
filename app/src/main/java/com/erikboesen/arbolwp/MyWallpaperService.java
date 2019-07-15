@@ -1,8 +1,6 @@
 package com.erikboesen.arbolwp;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,6 +8,8 @@ import android.graphics.Paint;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.service.wallpaper.WallpaperService;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
@@ -28,21 +28,16 @@ public class MyWallpaperService extends WallpaperService {
             }
 
         };
-        private List<MyPoint> circles;
         private Paint paint = new Paint();
         private int width;
-        int height;
+        private int height;
         private boolean visible = true;
-        private int maxNumber;
-        private boolean touchEnabled;
+
+
 
         public MyWallpaperEngine() {
             SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(MyWallpaperService.this);
-            maxNumber = Integer
-                    .valueOf(prefs.getString("numberOfCircles", "4"));
-            touchEnabled = prefs.getBoolean("touch", false);
-            circles = new ArrayList<MyPoint>();
             paint.setAntiAlias(true);
             paint.setColor(Color.WHITE);
             paint.setStyle(Paint.Style.STROKE);
@@ -76,39 +71,13 @@ public class MyWallpaperService extends WallpaperService {
             super.onSurfaceChanged(holder, format, width, height);
         }
 
-        @Override
-        public void onTouchEvent(MotionEvent event) {
-            if (touchEnabled) {
-
-                float x = event.getX();
-                float y = event.getY();
-                SurfaceHolder holder = getSurfaceHolder();
-                Canvas canvas = null;
-                try {
-                    canvas = holder.lockCanvas();
-                    if (canvas != null) {
-                        canvas.drawColor(Color.BLACK);
-                        circles.clear();
-                        circles.add(new MyPoint(
-                                String.valueOf(circles.size() + 1), x, y));
-                        drawCircles(canvas, circles);
-
-                    }
-                } finally {
-                    if (canvas != null)
-                        holder.unlockCanvasAndPost(canvas);
-                }
-                super.onTouchEvent(event);
-            }
-        }
-
         private void draw() {
             SurfaceHolder holder = getSurfaceHolder();
             Canvas canvas = null;
             try {
                 canvas = holder.lockCanvas();
                 if (canvas != null) {
-                    this.drawBranch(canvas, 5, 20, 50, 50, 0);
+                    this.drawBranch(canvas, 5, 200, this.width / 2, this.height, 0);
                 }
             } finally {
                 if (canvas != null)
@@ -125,8 +94,6 @@ public class MyWallpaperService extends WallpaperService {
         }
 
         private void drawBranch(Canvas canvas, int iteration, double length, int startX, int startY, double angle) {
-            canvas.drawLine(iteration, iteration, iteration * 4, iteration * 4, paint);
-            return;/*
             int branchLengthMultiplier = 75,
                 middleLengthMultiplier = 65,
                 spread = 30,
@@ -150,7 +117,7 @@ public class MyWallpaperService extends WallpaperService {
                         iteration - 1,
                         length * branchLengthMultiplier / 100,
                         endX, endY,
-                        angle + this.radians(-spread + tilt + wind));*/
+                        angle + this.radians(-spread + tilt + wind));
             }
         }
     }
