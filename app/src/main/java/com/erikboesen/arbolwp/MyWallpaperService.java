@@ -1,6 +1,5 @@
 package com.erikboesen.arbolwp;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -40,7 +39,7 @@ public class MyWallpaperService extends WallpaperService {
             paint.setColor(Color.WHITE);
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeJoin(Paint.Join.ROUND);
-            paint.setStrokeWidth(10f);
+            paint.setStrokeWidth(5f);
             handler.post(drawRunner);
         }
 
@@ -92,8 +91,10 @@ public class MyWallpaperService extends WallpaperService {
         }
 
         private void drawBranch(Canvas canvas, int iteration, double length, int startX, int startY, double angle) {
+            // TODO: enable this to make the branches shrink
+            paint.setStrokeWidth((float)iteration);
             int branchLengthMultiplier = 75,
-                middleLengthMultiplier = 65,
+                middleLengthMultiplier = 45,
                 spread = 30,
                 wind = 0,
                 tilt = 0;
@@ -105,7 +106,7 @@ public class MyWallpaperService extends WallpaperService {
                         iteration - 1,
                         length * branchLengthMultiplier / 100,
                         endX, endY,
-                        angle + this.radians(spread + tilt + wind));
+                        angle + this.radians(-spread + tilt + wind));
                 this.drawBranch(canvas,
                         iteration - 1,
                         length * middleLengthMultiplier / 100,
@@ -115,7 +116,7 @@ public class MyWallpaperService extends WallpaperService {
                         iteration - 1,
                         length * branchLengthMultiplier / 100,
                         endX, endY,
-                        angle + this.radians(-spread + tilt + wind));
+                        angle + this.radians(spread + tilt + wind));
             }
         }
     }
