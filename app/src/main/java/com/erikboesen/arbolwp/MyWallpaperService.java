@@ -30,8 +30,6 @@ public class MyWallpaperService extends WallpaperService {
         private int height;
         private boolean visible = true;
 
-
-
         public MyWallpaperEngine() {
             SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(MyWallpaperService.this);
